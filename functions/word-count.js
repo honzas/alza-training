@@ -3,12 +3,14 @@ const inputString = 'olly olly in come free';
 const wordCounter = (input) => {
   const words = input.split(' ');
 
-  const output = words.reduce((acc, curr) => {
+  const wordsObj = words.reduce((acc, curr) => {
     acc[curr] = acc[curr] ? ++acc[curr] : 1;
     return acc;
-  }, {})
+  }, {});
 
-  console.log(output);
+  for (let [key, value] of Object.entries(wordsObj)) {
+    console.log(`${key}: ${value}`);
+  }
 };
 
 wordCounter(inputString);
