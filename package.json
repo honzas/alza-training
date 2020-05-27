@@ -1,0 +1,14 @@
+{
+  "name": "alza-training",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dchepkasov/alza-training.git"
+  },
+  "author": "Denis Chepkasov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dchepkasov/alza-training/issues"
+  },
+  "homepage": "https://github.com/dchepkasov/alza-training#readme"
+}
