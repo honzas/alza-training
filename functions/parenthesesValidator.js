@@ -1,28 +1,22 @@
-const inputCorrect = '(()())';
-const inputIncorrect = '(()';
+const inputCorrect = '( ( 1 ) ( 2 ) )';
+const inputIncorrect = '( ( 3 )';
 
-const parenthesesValidator = (input) => {
-  const regex = /(\(|\))/g;
+function parenthesesValidator(input) {
+  let stack = 0;
 
-  const parens = input.match(regex);
-
-  let map = {
-    ")": "("
-  }
-
-  let stack = [];
-
-  for (let item = 0; item < parens.length; item++) {
-    if (parens[item] === "(") {
-      stack.push(parens[item]);
-    } else {
-      if (stack[stack.length - 1] === map[parens[item]]) {
-        stack.pop();
-      } else return `Result: ${false}`;
+  for (let item in input) {
+    if (input[item] == '(') {
+      stack++;
+    } else if (input[item] == ')') {
+      stack--;
     }
+
+    if (stack < 0) return `Result: ${false}`;
   }
 
-  return `Result: ${stack.length === 0 ? true : false}`;
+  if (stack > 0) return `Result: ${false}`;
+
+  return `Result: ${true}`;
 }
 
 console.log(parenthesesValidator(inputCorrect));
