@@ -10,5 +10,12 @@
   "bugs": {
     "url": "https://github.com/dchepkasov/alza-training/issues"
   },
-  "homepage": "https://github.com/dchepkasov/alza-training#readme"
+  "homepage": "https://github.com/dchepkasov/alza-training#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.1",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0"
+  }
 }
