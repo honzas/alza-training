@@ -83,51 +83,46 @@ const zooData = [{
   }
 ];
 
-listZooData = (data) => {
-  console.log('');
-  console.log('---------------');
-  console.log('');
+const zooManager = (data) => {
+  for (pavilion of data) {
+    let meatNeeded = 0, insectNeeded = 0;
 
-  data.map(pavilion => {
-    let meatNeeded, insectNeeded;
+    for (exposition of pavilion.expositions) {
+      for (animal of exposition.animals) {
+        const countMeatNeeded = () => {
+          if (animal.food.type === 'meat') {
+            meatNeeded += +animal.food.amount;
 
-    console.log(pavilion.name.charAt(0).toUpperCase() + pavilion.name.slice(1));
+            if (meatNeeded > (pavilion.food.meat - 1)) return true;
 
-    pavilion.expositions.map(exposition => {
-      console.log(` - ${exposition.name}`);
+            countMeatNeeded();
+          }
+        }
 
-      exposition.animals.map(animal => {
-        console.log(`   -- ${animal.name} (${animal.species}) : ${animal.food.type} (${animal.food.amount})`);
-      });
-      console.log('');
+        const countInsectNeeded = () => {
+          if (animal.food.type === 'insect') {
+            insectNeeded += +animal.food.amount;
 
-      if (exposition.subexpositions) {
-        exposition.subexpositions.map(subexposition => {
-          console.log(`      - ${subexposition.name}`);
+            if (insectNeeded > (pavilion.food.insect - 1)) return true;
 
-          subexposition.animals.map(animal => {
-            console.log(`         -- ${animal.name} (${animal.species}) : ${animal.food.type} (${animal.food.amount})`);
-          });
-          console.log('');
-        });
+            countInsectNeeded();
+          }
+        }
+
+        countMeatNeeded();
+        countInsectNeeded();
       }
-    });
-
-    console.log('Pavilion limits:');
-    for (animalType in pavilion.animalCountLimit) {
-      console.log(` - ${animalType} : ${pavilion.animalCountLimit[animalType]}`);
     }
 
-    console.log('');
-    console.log('Pavilion foods:');
-    for (foodType in pavilion.food) {
-      console.log(` - ${foodType} : ${pavilion.food[foodType]}`);
-    }
+    const meatMissing = meatNeeded - pavilion.food.meat;
+    const insectMissing = insectNeeded - pavilion.food.insect;
 
-    console.log('');
-    console.log('---------------');
-    console.log('');
-  });
+    if (meatMissing && meatMissing != 0)
+      console.log(`Missing meat for ${pavilion.name}: ${meatMissing}`);
+
+    if (insectMissing && insectMissing != 0)
+      console.log(`Missing insect for ${pavilion.name}: ${insectMissing}`);
+  }
 }
 
-listZooData(zooData);
+zooManager(zooData);
