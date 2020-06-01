@@ -85,7 +85,12 @@ const zooData = [{
 
 const zooManager = (data) => {
   for (pavilion of data) {
-    let meatNeeded = 0, insectNeeded = 0;
+    let meatNeeded = 0,
+      insectNeeded = 0,
+      mammalCount = 0,
+      birdsCount = 0,
+      statusMammal,
+      statusBirds;
 
     for (exposition of pavilion.expositions) {
       for (animal of exposition.animals) {
@@ -109,8 +114,33 @@ const zooManager = (data) => {
           }
         }
 
+        const countMammal = () => {
+          if (animal.species === 'mammal') {
+            mammalCount++;
+
+            if (mammalCount > (pavilion.animalCountLimit.mammal - 1)) return false;
+            else return true;
+
+            countMammal();
+          }
+        }
+
+        const countBirds = () => {
+          if (animal.species === 'birds') {
+            birdsCount++;
+
+            if (birdsCount > (pavilion.animalCountLimit.birds - 1)) return false;
+            else return true;
+
+            countBirds();
+          }
+        }
+
         countMeatNeeded();
         countInsectNeeded();
+
+        statusMammal = countMammal();
+        statusBirds = countBirds();
       }
     }
 
@@ -122,6 +152,12 @@ const zooManager = (data) => {
 
     if (insectMissing && insectMissing != 0)
       console.log(`Missing insect for ${pavilion.name}: ${insectMissing}`);
+
+    if (pavilion.animalCountLimit.mammal)
+      console.log(`${pavilion.name}: Mammal ${statusMammal === true ? 'OK' : 'FAIL'}`);
+
+    if (pavilion.animalCountLimit.birds)
+      console.log(`${pavilion.name}: Birds ${statusBirds === true ? 'OK' : 'FAIL'}`);
   }
 }
 
