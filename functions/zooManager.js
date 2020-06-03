@@ -121,6 +121,32 @@ const zooData = [{
 const zooManager = (data) => {
   for (let i of data) {
 
+    // Function: Get food list
+    const getFoodList = (foodList) => {
+      let foodObj = {};
+
+      for (food in foodList) {
+        foodObj[food] = foodList[food];
+      }
+
+      return foodObj;
+    }
+
+    // Function: Food limit calculator
+    const foodLimitCalc = foodList => {
+      let foodLimit,
+        foodType;
+
+      for (food in foodList) {
+        foodType = food;
+        foodLimit = +foodList[food];
+
+        if (foodLimit != 0) {
+          console.log(`Food limit in ${i.name}: ${foodType} ${foodLimit}`);
+        }
+      }
+    }
+
     // Function: Needed food calculator
     const foodNeededCalc = foodType => {
       let foodNeeded = 0;
@@ -136,41 +162,23 @@ const zooManager = (data) => {
       }
     }
 
-    // Function: Food limit calculator
-    const foodLimitCalc = foodType => {
-      let foodLimit = 0;
-
-      for (food in i.food) {
-        if (food === foodType) {
-          foodLimit += +i.food[food];
-        }
-      }
-
-      if (foodLimit != 0) {
-        console.log(`Food limit in ${i.name}: ${foodType} ${foodLimit}`);
-      }
-    }
-
     // Pavilions
     if (i.hasOwnProperty('expositions')) {
       console.log('');
       console.log(i.name);
       console.log('---------------');
 
-      foodLimitCalc('meat');
-      foodLimitCalc('insect');
-      foodLimitCalc('vegetable');
-      foodLimitCalc('fish');
+      foodLimitCalc(getFoodList(i.food));
 
       zooManager(i.expositions);
     }
 
     // Expositions
     if (i.hasOwnProperty('animals')) {
-      foodNeededCalc('meat');
-      foodNeededCalc('insect');
-      foodNeededCalc('vegetable');
-      foodNeededCalc('fish');
+      // foodNeededCalc('meat');
+      // foodNeededCalc('insect');
+      // foodNeededCalc('vegetable');
+      // foodNeededCalc('fish');
     }
 
     // Subexpositions
