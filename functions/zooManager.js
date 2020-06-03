@@ -118,121 +118,66 @@ const zooData = [{
   }
 ];
 
-// Food counter
-const foodCounter = (animal, foodType) => {
-  let foodNeeded = 0;
+const zooManager = (data) => {
+  for (let i of data) {
 
-  if (animal.food.type === foodType) {
-    foodNeeded += +animal.food.amount;
-  };
+    // Function: Needed foodcalculator
+    const foodNeededCalc = foodType => {
+      let foodNeeded = 0;
 
-  const limit = pavilion.food[foodType];
-  const lack = foodNeeded - limit;
-
-  if (foodNeeded > limit) return `Missing ${foodType}: ${lack}`;
-  else return 'No missing food';
-}
-
-// Animals in all expositions and subexpositions
-const zooAnimals = (data) => {
-  for (let pavilion of data) {
-    if (pavilion.hasOwnProperty('expositions')) {
-      zooAnimals(pavilion.expositions);
-    }
-
-    if (pavilion.hasOwnProperty('subexpositions')) {
-      zooAnimals(pavilion.subexpositions);
-    }
-
-    if (pavilion.hasOwnProperty('animals')) {
-      for (animal of pavilion.animals) {
-        console.log(animal.name);
+      for (animal of i.animals) {
+        if (animal.food.type === foodType) {
+          foodNeeded += +animal.food.amount;
+        }
       }
 
-      zooAnimals(pavilion.animals);
+      if (foodNeeded != 0) {
+        console.log(`Food needed in ${i.name}: ${foodType} ${foodNeeded}`);
+      }
+    }
+
+    // Function: Missing food calculator
+    const foodMissingCalc = foodType => {
+      let foodLimit = 0;
+
+      for (food in i.food) {
+        if (food === foodType) {
+          foodLimit += +i.food[food];
+        }
+      }
+
+      if (foodLimit != 0) {
+        console.log(`Food limit in ${i.name}: ${foodType} ${foodLimit}`);
+      }
+    }
+
+    // Pavilions
+    if (i.hasOwnProperty('expositions')) {
+      console.log('');
+      console.log(i.name);
+      console.log('---------------');
+
+      foodMissingCalc('meat');
+      foodMissingCalc('insect');
+      foodMissingCalc('vegetable');
+      foodMissingCalc('fish');
+
+      zooManager(i.expositions);
+    }
+
+    // Expositions
+    if (i.hasOwnProperty('animals')) {
+      foodNeededCalc('meat');
+      foodNeededCalc('insect');
+      foodNeededCalc('vegetable');
+      foodNeededCalc('fish');
+    }
+
+    // Subexpositions
+    if (i.hasOwnProperty('subexpositions')) {
+      zooManager(i.subexpositions);
     }
   }
 }
 
-zooAnimals(zooData);
-
-
-// const zooManager = (data) => {
-//   for (pavilion of data) {
-//     let meatNeeded = 0,
-//       insectNeeded = 0,
-//       mammalCount = 0,
-//       birdsCount = 0,
-//       statusMammal,
-//       statusBirds;
-
-//     for (exposition of pavilion.expositions) {
-//       for (animal of exposition.animals) {
-//         const countMeatNeeded = () => {
-//           if (animal.food.type === 'meat') {
-//             meatNeeded += +animal.food.amount;
-
-//             if (meatNeeded > (pavilion.food.meat - 1)) return true;
-
-//             countMeatNeeded();
-//           }
-//         }
-
-//         const countInsectNeeded = () => {
-//           if (animal.food.type === 'insect') {
-//             insectNeeded += +animal.food.amount;
-
-//             if (insectNeeded > (pavilion.food.insect - 1)) return true;
-
-//             countInsectNeeded();
-//           }
-//         }
-
-//         const countMammal = () => {
-//           if (animal.species === 'mammal') {
-//             mammalCount++;
-
-//             if (mammalCount > (pavilion.animalCountLimit.mammal - 1)) return false;
-//             else return true;
-
-//             countMammal();
-//           }
-//         }
-
-//         const countBirds = () => {
-//           if (animal.species === 'birds') {
-//             birdsCount++;
-
-//             if (birdsCount > (pavilion.animalCountLimit.birds - 1)) return false;
-//             else return true;
-
-//             countBirds();
-//           }
-//         }
-
-//         countMeatNeeded();
-//         countInsectNeeded();
-
-//         statusMammal = countMammal();
-//         statusBirds = countBirds();
-//       }
-//     }
-
-//     const meatMissing = meatNeeded - pavilion.food.meat;
-//     const insectMissing = insectNeeded - pavilion.food.insect;
-
-//     if (meatMissing && meatMissing != 0)
-//       console.log(`Missing meat for ${pavilion.name}: ${meatMissing}`);
-
-//     if (insectMissing && insectMissing != 0)
-//       console.log(`Missing insect for ${pavilion.name}: ${insectMissing}`);
-
-//     if (pavilion.animalCountLimit.mammal)
-//       console.log(`${pavilion.name}: Mammal ${statusMammal === true ? 'OK' : 'FAIL'}`);
-
-//     if (pavilion.animalCountLimit.birds)
-//       console.log(`${pavilion.name}: Birds ${statusBirds === true ? 'OK' : 'FAIL'}`);
-//   }
-// }
-
-// zooManager(zooData);
+zooManager(zooData);
