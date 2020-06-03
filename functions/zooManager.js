@@ -121,7 +121,7 @@ const zooData = [{
 const zooManager = (data) => {
   for (let i of data) {
 
-    // Function: Needed foodcalculator
+    // Function: Needed food calculator
     const foodNeededCalc = foodType => {
       let foodNeeded = 0;
 
