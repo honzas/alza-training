@@ -136,8 +136,8 @@ const zooManager = (data) => {
       }
     }
 
-    // Function: Missing food calculator
-    const foodMissingCalc = foodType => {
+    // Function: Food limit calculator
+    const foodLimitCalc = foodType => {
       let foodLimit = 0;
 
       for (food in i.food) {
@@ -157,10 +157,10 @@ const zooManager = (data) => {
       console.log(i.name);
       console.log('---------------');
 
-      foodMissingCalc('meat');
-      foodMissingCalc('insect');
-      foodMissingCalc('vegetable');
-      foodMissingCalc('fish');
+      foodLimitCalc('meat');
+      foodLimitCalc('insect');
+      foodLimitCalc('vegetable');
+      foodLimitCalc('fish');
 
       zooManager(i.expositions);
     }
