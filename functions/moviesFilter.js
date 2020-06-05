@@ -31,29 +31,24 @@ const moviesData = [{
 ]
 
 const filters = {
-  // title: ['It Chapter Two'],
+  title: ['It Chapter Two'],
   // director: ['Andy Muschietti'],
   // date: ['6.09.2019'],
-  tags: ['Comedy', 'Sci-Fi'],
+  // tags: ['Comedy', 'Sci-Fi'],
 };
+
+
 
 const moviesFilter = (movies, filters) => {
   return movies.filter((movie) => {
     return Object.entries(filters).every(([filterProperty, filterValues]) => {
 
-      switch (Object.prototype.toString.call(movie[filterProperty])) {
-        case '[object Object]':
-          return Object.entries(filterValues).every(([extFilterProperty, extFilterValue]) => {
-            return new Map(Object.entries(movie[filterProperty])).get(extFilterProperty) === extFilterValue;
-          });
-
-        case '[object Array]':
-          return movie[filterProperty].some((productValue) => {
-            return filterValues.includes(productValue);
-          });
-
-        default:
-          return filterValues.includes(movie[filterProperty]);
+      if (Array.isArray(movie[filterProperty])) {
+        return movie[filterProperty].some((productValue) => {
+          return filterValues.includes(productValue);
+        });
+      } else {
+        return filterValues.includes(movie[filterProperty]);
       }
 
     });
