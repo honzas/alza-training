@@ -31,10 +31,10 @@ const moviesData = [{
 ]
 
 const filters = {
-  title: ['It Chapter Two'],
+  // title: ['It Chapter Two'],
   // director: ['Andy Muschietti'],
   // date: ['6.09.2019'],
-  // tags: ['Comedy', 'Sci-Fi'],
+  tags: ['ComedY', 'Sci-FI'],
 };
 
 
@@ -44,8 +44,8 @@ const moviesFilter = (movies, filters) => {
     return Object.entries(filters).every(([filterProperty, filterValues]) => {
 
       if (Array.isArray(movie[filterProperty])) {
-        return movie[filterProperty].some((productValue) => {
-          return filterValues.includes(productValue);
+        return movie[filterProperty].some((element) => {
+          return filterValues.includes(element);
         });
       } else {
         return filterValues.includes(movie[filterProperty]);
