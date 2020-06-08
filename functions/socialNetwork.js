@@ -17,7 +17,6 @@ const peopleList = [{
 
 const findFriends = (people, targetPerson, targetInterest) => {
   for (let person of people) {
-
     const findByInterest = interestsList => {
       for (let interest of interestsList) {
         if (interest === targetInterest) {
@@ -28,26 +27,20 @@ const findFriends = (people, targetPerson, targetInterest) => {
     }
 
     if (person.name === targetPerson) {
-
       if (person.hasOwnProperty('friends')) {
-
         for (let friend of person.friends) {
           for (let person of people) {
             if (person.name === friend) {
-              findByInterest(person.interests);
+              findFriends(people, targetPerson, targetInterest);
             }
           }
         }
-
-        // findFriends(people, targetPerson, targetInterest);
       }
 
       if (person.hasOwnProperty('interests')) {
         findByInterest(person.interests);
       }
-
     }
-
   };
 };
 
