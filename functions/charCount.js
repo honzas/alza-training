@@ -20,13 +20,13 @@ const setChars = (data) => {
       return input.reduce((acc, curr) => {
         acc[curr] = acc[curr] ? ++acc[curr] : 1;
         return acc;
-      }, []);
+      }, {});
     }
 
     if (direction === 'column') {
       result = input.reduce((row, array) => {
         array.forEach((col, i) => {
-          row[i] = row[i] || [];
+          row[i] = row[i] || {};
           row[i][col] = (row[i][col] || 0) + 1;
         });
         return row;
