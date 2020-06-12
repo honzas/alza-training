@@ -93,6 +93,7 @@ const jiraBoards = (boards, tickets) => {
   const ticketDetailsByPriority = (boards, tickets) => {
     boards.forEach(board => {
       let ticketList = [];
+
       board.tickets.forEach(boardTicketId => {
         tickets.forEach(ticket => {
 
@@ -134,9 +135,9 @@ const jiraBoards = (boards, tickets) => {
   // Tickets can have subtickets – implement 2 actions above, to take subtickets into account
   //
 
-  cleanDoneTickets(boards, tickets);
+  // cleanDoneTickets(boards, tickets);
   console.log('')
-  ticketDetailsByPriority(boards, tickets);
+  // ticketDetailsByPriority(boards, tickets);
   console.log('')
   totalEstimate(boards, tickets);
 }
