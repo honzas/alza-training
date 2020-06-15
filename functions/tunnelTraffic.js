@@ -17,7 +17,11 @@ const vehicleData = [{
 
 const tunnelData = {
   totalSize: 8,
-  vehicles: ['vehicle-0']
+  vehicles: [{
+    id: 'vehicle-0',
+    type: 'bike',
+    size: 1
+  }]
 }
 
 console.log('Before:');
@@ -25,25 +29,26 @@ console.log(vehicleData);
 console.log(tunnelData);
 
 const tunnelTraffic = (vehicles, tunnel) => {
-  if (tunnel.vehicles.length > 0) {
-    tunnel.vehicles.shift();
-  } else return;
-
-  for (let vehicle of vehicles) {
-    if (vehicles.length > 0) {
-      tunnel.vehicles.push(vehicle);
-      vehicles.splice(vehicle, 1);
-
-      console.log('');
-      console.log(vehicle.type);
-      console.log(vehicleData);
-      console.log(tunnelData);
+  const tunnelLeave = () => {
+    if (tunnel.vehicles.length > 0) {
+      tunnel.vehicles.shift();
     } else return;
+  }
+
+  tunnelLeave();
+
+  let i = 0;
+
+  while (vehicles[i]) {
+    tunnel.vehicles.push(vehicles[i]);
+    vehicles.shift();
+    i++;
 
     console.log('');
-    console.log('');
+    console.log(vehicleData);
+    console.log(tunnelData);
 
-    tunnelTraffic(vehicleData, tunnelData);
+    tunnelLeave();
   }
 }
 
