@@ -41,8 +41,7 @@ const tunnelTraffic = (vehicles, tunnel) => {
 
   while (vehicles[i]) {
     tunnel.vehicles.push(vehicles[i]);
-    vehicles.shift();
-    i++;
+    vehicles.splice(vehicles[i], 1);
 
     console.log('');
     console.log(vehicleData);
