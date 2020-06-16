@@ -17,6 +17,7 @@ const vehicleData = [{
 
 const tunnelData = {
   totalSize: 8,
+  currentSize: 1,
   vehicles: [{
     id: 'vehicle-0',
     type: 'bike',
@@ -24,35 +25,41 @@ const tunnelData = {
   }]
 }
 
-console.log('Before:');
-console.log(vehicleData);
-console.log(tunnelData);
+console.log('Current Size:', tunnelData.currentSize);
 
 const tunnelTraffic = (vehicles, tunnel) => {
-  const tunnelLeave = () => {
-    if (tunnel.vehicles.length > 0) {
-      tunnel.vehicles.shift();
-    } else return;
-  }
+  while (tunnel.vehicles.length > 0) {
+    const leavingVehicle = tunnel.vehicles.shift();
 
-  tunnelLeave();
+    tunnel.currentSize -= leavingVehicle.size;
 
-  let i = 0;
-
-  while (vehicles[i]) {
-    tunnel.vehicles.push(vehicles[i]);
-    vehicles.splice(vehicles[i], 1);
-
+    console.log('Leaving:', leavingVehicle);
+    console.log('Current Size:', tunnel.currentSize);
     console.log('');
-    console.log(vehicleData);
-    console.log(tunnelData);
 
-    tunnelLeave();
+    if (vehicles.length === 0) {
+      continue;
+    }
+
+    let enteringVehicleSize = vehicles[0].size;
+
+    while (tunnel.totalSize >= tunnel.currentSize + enteringVehicleSize) {
+      const enteringVehicle = vehicles.shift();
+
+      tunnel.currentSize += enteringVehicle.size;
+      tunnel.vehicles.push(enteringVehicle);
+
+      console.log('Entering:', enteringVehicle);
+      console.log('Current Size:', tunnel.currentSize);
+
+      if (vehicles.length === 0) {
+        break;
+      }
+
+      enteringVehicleSize = vehicles[0].size;
+    }
+
   }
 }
 
 tunnelTraffic(vehicleData, tunnelData);
-
-console.log('After:');
-console.log(vehicleData);
-console.log(tunnelData);
