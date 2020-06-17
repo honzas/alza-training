@@ -1,8 +1,9 @@
 const data = ['a', 'a', 'b', 'x', 'x', 'x', 'a'];
 
 function compressArray(arr) {
+  let countChars = 0;
 
-  return arr.reduce((acc, char) => {
+  const compressed = arr.reduce((acc, char) => {
     let prev = acc[acc.length - 1];
 
     if (prev && char === prev.char) {
@@ -12,11 +13,18 @@ function compressArray(arr) {
         char,
         count: 1
       });
+
+      console.log(prev);
     }
+
+    countChars++;
 
     return acc;
   }, []);
 
+  console.log(compressed.pop());
+  console.log('Total:', countChars);
+
 };
 
-console.log(compressArray(data));
+compressArray(data);
