@@ -7,10 +7,10 @@ const data = [
 const mineSweeper = (input) => {
 
   const countFunc = (input, row, col) => {
-    const columns = [row1 = input[row - 1], row2 = input[row], row3 = input[row + 1]];
+    const rows = [prevRow = input[row - 1], currentRow = input[row], nextRow = input[row + 1]];
     let count = 0;
 
-    columns.forEach(arr => {
+    rows.forEach(arr => {
       if (arr) {
         if (arr[col - 1] == '*' || arr[col] == '*' || arr[col + 1] == '*') {
           count++;
